@@ -9,15 +9,13 @@ const calculator = () => {
   const dotBtn = document.getElementById('dot-btn')
   const cancelBtn = document.getElementById('cancel-btn')
   const equalBtn = document.getElementById('equal-btn')
+  const negateBtn = document.getElementById('negate-btn')
 
   const keyUpHandler = (e) => {
     e.preventDefault()
-    if (validSignsRegExp.test(e.key)) {
-      calculatorDisplayValue += e.key
-    }
-    if (e.key === 'Backspace') {
-      calculatorDisplayValue = calculatorDisplayValue.slice(0, -1)
-    }
+    if (validSignsRegExp.test(e.key)) calculatorDisplayValue += e.key
+    if (e.key === 'Backspace') calculatorDisplayValue = calculatorDisplayValue.slice(0, -1)
+    if (e.key === 'Escape') cancelHandler()
     calculatorDisplay.value = calculatorDisplayValue
   }
 
@@ -79,12 +77,18 @@ const calculator = () => {
       const value = calculatorDisplayValue
         .replaceAll('x', '*')
         .replaceAll('()', '')
-      const expression = BigInt(eval(value)).toString();
-      if (expression.length > 21) {
-        calculatorDisplayValue = ''
-        calculatorDisplay.value = expression.slice(0, 21) + `10n${expression.length - 21}`
+
+      if (value) {
+        const expression = BigInt(eval(value)).toString();
+        if (expression.length > 21) {
+          calculatorDisplayValue = ''
+          calculatorDisplay.value = expression.slice(0, 21) + `10n${expression.length - 21}`
+        } else {
+          calculatorDisplayValue = expression
+          calculatorDisplay.value = calculatorDisplayValue
+        }
       } else {
-        calculatorDisplayValue = expression
+        calculatorDisplayValue = ''
         calculatorDisplay.value = calculatorDisplayValue
       }
     }

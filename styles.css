@@ -100,9 +100,15 @@ body {
 #cancel-btn{
   background: #fdbd26;
   color: #fff;
+  width: 49.5%;
 }
 
 #cancel-btn:hover,
 #cancel-btn:focus-visible{
   background: #f3b421;
+}
+
+.num-btn:nth-last-child(2){
+  align-self: flex-start;
+  margin: 0;
 }
